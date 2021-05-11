@@ -1,5 +1,5 @@
 import Home from '../Pages/Home/Home.js';
-import Analysis from '../Pages/Analysis';
+import Analysis from '../Pages/MapBoxAnalysis/MapAnalysis.js';
 import Comparison from '../Pages/Comparison/comparison';
 import District from '../Pages/District/District.js';
 import Villages from '../Pages/Villages/Villages.js';
