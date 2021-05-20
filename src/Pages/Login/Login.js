@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Form, Button, Input, Checkbox, message } from 'antd';
+import { Form, Button, Input, Checkbox, message, Select } from 'antd';
 import './Login.css';
 import { axiosInstance } from '../../utils/axiosIntercepter';
-
+import { IntlProvider, FormattedMessage, FormattedDate } from 'react-intl';
+import Languages from '../../languages.json';
+const { Option } = Select;
+let sc={
+	en:{
+		login:"Login",
+	},
+	hi:{
+		login:"लॉग इन",
+	},
+}
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       loadings: false,
       checked: false,
+      localeLang: 'en',
     };
   }
 
@@ -79,25 +90,59 @@ class Login extends Component {
       });
   };
   componentDidMount() {
+    console.log(Languages,sc);
     document.title = 'AFL Monitoring';
   }
   render() {
     const { loadings } = this.state;
     return (
-      <div className="main-content">
+      <IntlProvider locale={this.state.localeLang} messages={Languages[this.state.localeLang]}>
+        <div className="main-content">
         <div className="left-content">
-          <h3 className="page-title">AFL Monitoring</h3>
+          <h3 className="page-title">
+            <FormattedMessage
+            id="afl"
+            defaultMessage="some default one"
+            values={ this.state.localeLang }
+          />
+          <span> </span>
+           <FormattedMessage
+            id="monitoring"
+            defaultMessage="some default one"
+            values={ this.state.localeLang }
+          />
+          </h3>
         </div>
         <div className="right-content">
+          <div className="select_lang">
+          <Select
+            style={{ width: '100px' }}
+            defaultValue="en"
+            onChange={(e) => {
+              console.log(e);
+              this.setState({ ...this.state, localeLang: e });
+            }}>
+            <Option value="hi">Hindi</Option>
+            <Option value="en">English</Option>
+          </Select>
+          </div>
           <Form
             name="normal_login"
             className="login-form"
             onFinish={this.handleSubmit}>
             <h2>
-              <b>LogIn</b>
+              <b> <FormattedMessage
+                  id="login"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  /></b>
             </h2>
             <h5>
-              <b>Username</b>
+              <b> <FormattedMessage
+                  id="username"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  /></b>
             </h5>
             <Form.Item
               name="username"
@@ -111,7 +156,11 @@ class Login extends Component {
               <Input placeholder="Username" style={{ borderRadius: '7px' }} />
             </Form.Item>
             <h5>
-              <b>Password</b>
+              <b><FormattedMessage
+                  id="password"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  /></b>
             </h5>
             <Form.Item
               name="password"
@@ -134,7 +183,11 @@ class Login extends Component {
                 name="checked"
                 checked={this.state.checked}
                 onChange={this.onCheckboxChange}>
-                <span style={{ fontWeight: 500 }}>Remember me</span>
+                <span style={{ fontWeight: 500 }}><FormattedMessage
+                  id="rememberMe"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  /></span>
               </Checkbox>
             </Form.Item>
             <Form.Item>
@@ -149,19 +202,30 @@ class Login extends Component {
                     color: '#ffffff',
                     fontWeight: '500',
                   }}>
-                  LOGIN
+                  <FormattedMessage
+                  id="login"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  />
+                 
                 </Button>
               </Form.Item>
               <a
                 className="login-form-forgot"
                 href="/"
                 style={{ color: '#e03b3b' }}>
-                Forgot Password?
+                <FormattedMessage
+                  id="forgotPass"
+                  defaultMessage="some default one"
+                  values={ this.state.localeLang }
+                  />?
               </a>
             </Form.Item>
           </Form>
         </div>
       </div>
+      </IntlProvider>
+      
     );
   }
 }

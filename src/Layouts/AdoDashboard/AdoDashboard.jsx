@@ -45,6 +45,8 @@ class AdoDashboard extends Component {
               logout={this.props.logout}
               toggle={this.toggle}
               collapsed={this.state.collapsed}
+              type="ado_dashboard"
+              loginData={this.props.loginData}
             />
             <Contents
               history={this.props.history}
